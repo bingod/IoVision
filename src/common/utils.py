@@ -46,13 +46,14 @@ def setCurrentTemplateDir(name):
 def setStaticResourceDir(dirx):    
     define("static_resource_dir", default=options.current_template_dir + os.sep + dirx, help="Static resource directory")
     
-def getConfigFile():     
+def getConfigFile(file_path):     
     config = ConfigParser.RawConfigParser()
-    config.read("setup.cfg")
+    config.read(file_path)
     return config
 
-def loadConfig():
-    config = getConfigFile()
+def loadConfig(file_path):
+    config = getConfigFile(file_path)
+    
     setAuthor(config.get("sect_basic", "author"))
     setUrl(config.get("sect_basic", "url"))
     setTitle(config.get("sect_basic", "title"))
@@ -67,9 +68,8 @@ def loadConfig():
     setCurrentTemplateDir(config.get("sect_basic", "template_name"))
     setStaticResourceDir(config.get("sect_dir_tree", "static_resource_dir"))    
        
-def initSourcePath():
-    source_path = os.path.dirname(os.path.abspath(__file__))
-    # change current working directory to source_path for relative paths to work correctly
-    os.chdir(source_path)
-    if os.access(source_path, os.F_OK):
-        sys.path.append(source_path)
+def initRootPath(root_path):
+    # change current working directory to root_path for relative paths to work correctly
+    os.chdir(root_path)
+    if os.access(root_path, os.F_OK):
+        sys.path.append(root_path)

@@ -1,11 +1,12 @@
 #!/usr/bin/env PYTHON
 
+import os
 from tornado.web import Application
 from tornado.ioloop import IOLoop
 from src.handlers import handlers
 from tornado.options import options
 
-from utils import initSourcePath, loadConfig
+from src.common.utils import initRootPath, loadConfig
     
 def initServer():
     settings = dict(
@@ -19,8 +20,12 @@ def initServer():
     server.listen(options.port)
 
 if __name__ == "__main__":
-    initSourcePath()
-    loadConfig()
+    root_path = os.path.dirname(os.path.abspath(__file__))
+    initRootPath(root_path)
+    
+    config_file_path = root_path + os.sep + "setup.cfg"
+    loadConfig(config_file_path)
+    
     initServer()
     IOLoop.current().instance().start()
 

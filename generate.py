@@ -9,7 +9,7 @@ Created on Oct 6, 2014
 import os
 import shutil
 from tornado.options import options
-from utils import initSourcePath, loadConfig
+from src.common.utils import initRootPath, loadConfig
 from src.common.template_parser import TemplateParser
 from src.common.settings import getSiteInfo
 from src.common import markdown_parser
@@ -45,7 +45,7 @@ def copyStaticFiles():
 def generatePosts():
     dest = options.build_dir + os.sep + "post"
     mkdir(dest)
-    posts = markdown_parser.getAllParsedPosts(brief=True)
+    posts = markdown_parser.getAllParsedPosts(brief=False)
     params = getSiteInfo()
     
     for post in posts:
@@ -62,13 +62,19 @@ def generateAbout():
     html = TemplateParser.parse(options.current_template_dir, "about.html", post=post, params=params)
     about_file = open(dest + os.sep + "index.html", "wb")
     about_file.write(html)
-    
-if __name__ == '__main__':
-    initSourcePath()
-    loadConfig()
-    
+
+def generate():    
     generateIndex()
     copyStaticFiles()
     generatePosts()
     generateAbout()
+        
+if __name__ == '__main__':
+    root_path = os.path.dirname(os.path.abspath(__file__))
+    initRootPath(root_path)
+    
+    config_file_path = root_path + os.sep + "setup.cfg"
+    loadConfig(config_file_path)
+    
+    generate()
     

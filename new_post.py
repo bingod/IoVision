@@ -8,12 +8,12 @@ Created on Oct 6, 2014
 
 import os,time
 from tornado.options import options
-from utils import initSourcePath, loadConfig
+from src.common.utils import initRootPath, loadConfig
 
 def formatPostTitle(tt):
     tt = tt.lower()
+    
     words = tt.split(" ")
-    print words
     for word in words[:]: # Do not use 'for word in words:'
         if word == "":
             words.remove("")
@@ -42,8 +42,11 @@ def writeToFile(path, post):
     filex.write(content)
     
 if __name__ == '__main__':
-    initSourcePath()
-    loadConfig()
+    root_path = os.path.dirname(os.path.abspath(__file__))
+    initRootPath(root_path)
+    
+    config_file_path = root_path + os.sep + "setup.cfg"
+    loadConfig(config_file_path)
     
     post = getPostInfo()
     dest_dir = options.posts_dir
