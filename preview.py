@@ -16,7 +16,7 @@ def initServer():
     )
     server = Application(handlers, **settings)
     #server.settings = settings # Never use this.   
-    options.port="8888" 
+    #options.port="8888" 
     server.listen(options.port)
 
 if __name__ == "__main__":
