@@ -14,7 +14,8 @@ def initServer():
                     template_path=options.current_template_dir
     )
     server = Application(handlers, **settings)
-    #server.settings = settings # Never use this.    
+    #server.settings = settings # Never use this.   
+    options.port="8888" 
     server.listen(options.port)
 
 if __name__ == "__main__":
