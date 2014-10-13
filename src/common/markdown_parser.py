@@ -77,7 +77,8 @@ class BasicParser:
             end = content.index("<!-- more -->")
             
         return content[0:end]
-
+    
+    
 def get_all_parsed_posts(brief=True):
         posts = []
         post_name_list = os.listdir(options.posts_dir)
@@ -90,3 +91,17 @@ def get_all_parsed_posts(brief=True):
             posts.append(post)
             
         return posts
+    
+def get_all_parsed_hobby_posts(brief=True):
+        posts = []
+        post_name_list = os.listdir(options.hobby_dir)
+        post_name_list.sort(reverse=True)
+        
+        for post_name in post_name_list:
+            post = BasicParser.parse(options.hobby_dir, post_name)
+            if brief:
+                post["content"] = BasicParser.get_brief_content(post["content"])
+            posts.append(post)
+            
+        return posts
+    

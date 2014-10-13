@@ -46,6 +46,7 @@ def generate_posts():
     dest = options.build_dir + os.sep + "post"
     mkdir(dest)
     posts = markdown_parser.get_all_parsed_posts(brief=False)
+    
     params = get_site_info()
     
     for post in posts:
@@ -63,6 +64,26 @@ def generate_about():
     html = TemplateParser.parse(options.current_template_dir, "about.html", post=post, params=params)
     about_file = open(dest + os.sep + "index.html", "wb")
     about_file.write(html)
+    
+def generate_hobby_index():
+    dest = options.build_dir + os.sep + "hobby"
+    mkdir(dest)
+    posts = markdown_parser.get_all_parsed_hobby_posts()
+    params = get_site_info()
+    html = TemplateParser.parse(options.current_template_dir, "hobbyindex.html", posts=posts, params=params)
+    index_file = open("build/hobby/index.html", "wb")
+    index_file.write(html)
+    
+def generate_hobby_posts():
+    dest = options.build_dir + os.sep + "hobby"+os.sep+"post"
+    mkdir(dest)
+    posts = markdown_parser.get_all_parsed_hobby_posts(brief=False)
+    params = get_site_info()
+    for post in posts:
+        html = TemplateParser.parse(options.current_template_dir, "post.html", post=post, params=params)
+        post_file = open(dest + os.sep + post["post_name"] + ".html", "wb")
+        post_file.write(html)    
+    
 
 def generate():
     mkdir(options.build_dir)
@@ -70,6 +91,8 @@ def generate():
     copy_static_files()
     generate_posts()
     generate_about()
+    generate_hobby_index()
+    generate_hobby_posts()
         
 if __name__ == '__main__':
     root_path = os.path.dirname(os.path.abspath(__file__))

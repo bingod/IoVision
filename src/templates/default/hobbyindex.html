@@ -6,7 +6,6 @@
 		<title>{{ params["title"] }}</title>
 		<link rel="shortcut icon" href="/static/img/favicon.ico"/>
 		<link rel="stylesheet" href="/static/style/style.css" type="text/css">
-		<script src="/static/js/run_prettify.js"></script>
 	</head>
 	<body>
 		<div id="content">
@@ -17,12 +16,14 @@
 		            <h2 class="site-nav"><a href="/about">About</a></h2>
 				</hgroup>
 			</header>
+			
 			<div id="main">
-				<div class="article_wrapper">
+				<div id="blog_index">
+					{% for post in posts %}
 					<article>
 						<div class="entry-header">
-							<h1 class="entry-title">{{ post["title"] }}</h1>
-							
+							<h1 class="entry-title"><a href="/hobby/post/{{ post["post_name"] }}.html">{{ post["title"] }}</a></h1>
+						
 							<div class="entry-meta">
 								<span class="sep"><time>{{ post["date"] }}</time></a></span>
 							</div>
@@ -33,17 +34,14 @@
 						</div>
 						
 					</article>
-					
-					{% include "utils/disqus.html" %}
-			
-										
+					{% end %}
 				</div>
 			</div>
 			
 			{% include "footer.html" %}
 			
 		</div>
-		
+
 		
 	</body>
 </html>
