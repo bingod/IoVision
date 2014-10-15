@@ -100,6 +100,12 @@ article {
 	border-width: 0px 0px 1px;
 }
 
+.page_btn{padding-top:20px;}
+.page_btn a{cursor:pointer;border:solid 1px #ccc;font-size:14px;}
+.page_box{ float:right;position:relative;right:37%;
+}
+
+
 .footer {
 	margin-left: 220px;
 	clear: both;
@@ -146,6 +152,7 @@ article blockquote {
 	padding: 1.5em 1em 0.2em 2em;
 	border-left: 5px solid #fce27c;
 }
+ul,li{ margin:0; padding:0; list-style:none; } 
 article ul, article ol {
 	margin: 10px 0 24px 12px;
 }
@@ -181,3 +188,5 @@ article code {
 	font-family: 'Monaco', 'monospace';
 	text-shadow: none;
 }
+
+

@@ -6,6 +6,8 @@
 		<title>{{ params["title"] }}</title>
 		<link rel="shortcut icon" href="/static/img/favicon.ico"/>
 		<link rel="stylesheet" href="/static/style/style.css" type="text/css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+		<script src="/static/js/page_parse.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="content">
@@ -19,29 +21,40 @@
 			
 			<div id="main">
 				<div id="blog_index">
-					{% for post in posts %}
-					<article>
-						<div class="entry-header">
-							<h1 class="entry-title"><a href="/post/{{ post["post_name"] }}.html">{{ post["title"] }}</a></h1>
+				   <div class="item">
+				       <ul class="clear">
+				           {% for post in posts %}  
+				                  <li>
+				                       <article>
+						                   <div class="entry-header">
+							                   <h1 class="entry-title"><a href="/post/{{ post["post_name"] }}.html">{{ post["title"] }}</a></h1>
 							
-							<div class="entry-meta">
-								<span class="sep"><time>{{ post["date"] }}</time></a></span>
-							</div>
-						</div>
+							                    <div class="entry-meta">
+								                   <span class="sep"><time>{{ post["date"] }}</time></a></span>
+							                    </div>
+						                   </div>
 						
-						<div class="entry-content">
-							{{ post["content"] }}
-						</div>
+						                   <div class="entry-content">
+							                {{ post["content"] }}
+						                   </div>
 						
-					</article>
-					{% end %}
+					                    </article>
+					               <li>
+					        
+					       {% end %}
+					<ul>
+				   </div>
 				</div>
 			</div>
+			<div class="page_btn clear">
+                <span class="page_box">
+                    <a class="prev">上一页</a><span class="num"><span class="current_page">1</span><span style="padding:0 3px;">/</span><span class="total"></span></span><a class="next">下一页</a>
+                </span>
+            </div>
 			
 			{% include "footer.html" %}
 			
 		</div>
-
 		
 	</body>
 </html>

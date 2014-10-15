@@ -15,9 +15,11 @@ class IndexHandler(RequestHandler):
     '''
     def get(self):
         posts = get_all_parsed_posts()
+        
         params = get_site_info()
         
         template_file_name = "index.html"
+
         self.render(template_file_name, posts = posts, params = params)
 
 handler = url(r"/", IndexHandler)     
