@@ -18,29 +18,29 @@
 		            <h2 class="site-nav"><a href="/about">About</a></h2>
 				</hgroup>
 			</header>
-			
+
 			<div id="main">
 				<div id="blog_index">
 				   <div class="item">
 				       <ul class="clear">
-				           {% for post in posts %}  
+				           {% for post in posts %}
 				                  <li>
 				                       <article>
 						                   <div class="entry-header">
 							                   <h1 class="entry-title"><a href="/post/{{ post["post_name"] }}.html">{{ post["title"] }}</a></h1>
-							
+
 							                    <div class="entry-meta">
 								                   <span class="sep"><time>{{ post["date"] }}</time></a></span>
 							                    </div>
 						                   </div>
-						
+
 						                   <div class="entry-content">
 							                {{ post["content"] }}
 						                   </div>
-						
+
 					                    </article>
 					               <li>
-					        
+
 					       {% end %}
 					<ul>
 				   </div>
@@ -51,10 +51,17 @@
                     <a class="prev">上一页</a><span class="num"><span class="current_page">1</span><span style="padding:0 3px;">/</span><span class="total"></span></span><a class="next">下一页</a>
                 </span>
             </div>
-			
+            <div id="music">
+                <audio autoplay="" preload="auto" controls="" loop="" id="audio">
+                    <source src="/static/music/jcdd.mp3" type="audio/mpeg">
+                    <embed src="/static/music/jcdd.mp3" height="10" width="10">
+                </audio>
+            </div>
+
+			{% include "utils/time.html %}
 			{% include "footer.html" %}
-			
+
 		</div>
-		
+
 	</body>
 </html>
