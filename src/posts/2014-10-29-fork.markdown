@@ -1,0 +1,81 @@
+---
+layout: post
+title: "fork函数引起的思考"
+date: 2014-10-29 16:51 +0800
+comments: true
+categories:
+---
+
+fork函数：
+
+一个进程调用fork（）函数后，系统先给新的进程分配资源，例如存储数据和代码的空间。然后把原来的进程的所有值都，复制到新的新进程中，只有少数值与原来的进程的值不同。相当于克隆了一个自己.fork函数返回两个值，返回子进程的pid,返回子进程的子进程pid,也就是0；
+<!-- more -->
+
+例子1；
+
+<pre class="prettyprint">
+  1 #include "stdio.h"
+  2 #include "unistd.h"
+  3 int main(){
+  4     pid_t spid;
+  5     spid=fork();
+  6     if(spid==0){
+  7         printf("This is child process ,pid:%d,spid:%d\n",getpid(),spid);
+  8     }
+  9     if(spid>0){
+ 10         printf("This is parent process,pid:%d,spid:%d\n",getpid(),spid);
+ 11     }
+ 12
+ 13 }
+ </pre>
+
+结果输出：
+
+This is parent process,pid:23347,spid:23348
+
+This is child process ,pid:23348,spid:0
+
+结合程序分析：对于P23347的进程，返回它的子进程的pid; 对于P23348进程，返回0；
+
+下面我们看更高级一些的例子；
+
+例子2：
+
+<pre class="prettyprint">
+  1 #include"stdio.h"
+  2 #include "sys/types.h"
+  3 #include "unistd.h"
+  4 int main(){
+  5     pid_t pid1;
+  6     pid_t pid2;
+  7     pid1=fork();
+  8     pid2=fork();
+  9     printf("parent:%d,pid:%d,forkpid1:%d,forkpid2:%d\n",getppid(),getpid(),pid1,pid2);
+ 10 }
+</pre>
+
+结果输出；
+
+parent:18989,pid:23601,forkpid1:23602,forkpid2:23603
+
+parent:23601,pid:23603,forkpid1:23602,forkpid2:0
+
+parent:23601,pid:23602,forkpid1:0,forkpid2:23604
+
+parent:23602,pid:23604,forkpid1:0,forkpid2:0
+
+下面我们一步步分析程序的运行过程：
+
+P23601->23603
+
+P23601->23602->23604
+
+主要是以上四个进程，对于P23601进程，第一次fork以后，pid1为它的子进程id:23602,再一次fork,pid2为它的又一个子进程:23603：所以输出第一行； parent:18989,pid:23601,forkpid1:23602,forkpid2:23603
+
+对于第一次fork产生的子进程P23602，是P23601的子进程，所以forkpid1=0,而经过第二次fork以后，它又是P23604的父进程，所以forkpid2=23604;所以输出第三行： parent:23601,pid:23602,forkpid1:0,forkpid2:23604
+
+而对于进程p23603来说，他是P23601第二次fork以后生的子进程，所以，它保持P23601的forkpid1,同时第二次fork它由于没有子进程，所以forkpid2=0,所以输出第二行； parent:23601,pid:23603,forkpid1:23602,forkpid2:0
+
+对于P23604，他是P23602的第二个fork生成的子进程，所以它保持P23602的forkpid1=0,同时由于在第二次fork他充当子进程的角色，所以它的forkpid2=0;
+
+如果静静的分析一个函数，了解它的执行过程，至少让你不会让你感到那么模糊不清，继续加油！

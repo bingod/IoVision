@@ -1,7 +1,7 @@
  $(document).ready(function(){
-                $("ul li:gt(4)").hide();//初始化，前面4条数据显示，其他的数据隐藏。
+                $("ul li:gt(10)").hide();//初始化，前面4条数据显示，其他的数据隐藏。
                 var total_q=$("ul li").index()+1;//总数据
-                var current_page=4;//每页显示的数据
+                var current_page=10;//每页显示的数据
                 var current_num=1;//当前页数
                 var total_page= Math.round(total_q/current_page);//总页数  
                 var next=$(".next");//下一页
