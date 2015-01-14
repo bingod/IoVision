@@ -21,19 +21,19 @@ a {
 }
 
 #main {
-	margin-left: 220px;
+	margin-left: 170px;
 }
 
 #header_index {
 	position: fixed;
-	width: 180px;
+	width: 155px;
 	margin-right: 40px;
 	margin-top: 30px;
 }
 
 #music {
-    position: relative;
-    left: 1000px;
+    position: absolute;
+    left: 1046px;
 }
 
 
@@ -108,12 +108,12 @@ article {
 
 .page_btn{padding-top:20px;}
 .page_btn a{cursor:pointer;border:solid 1px #ccc;font-size:14px;}
-.page_box{ float:right;position:relative;right:37%;
+.page_box{ float:right;position:relative;right:45%;
 }
 
 
 .footer {
-	margin-left: 220px;
+	margin-left: 10px;
 	clear: both;
 }
 
